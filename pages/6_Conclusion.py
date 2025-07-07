@@ -1,7 +1,8 @@
 import streamlit as st
 from utils import create_navigation_buttons
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide",
+                   initial_sidebar_state="collapsed")
 
 # Apply custom CSS for enhanced styling
 st.markdown("""
