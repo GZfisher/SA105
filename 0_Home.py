@@ -1,5 +1,6 @@
 import streamlit as st
 from utils import create_navigation_buttons
+from streamlit_extras.stylable_container import stylable_container # Keep this import
 
 st.set_page_config(
     page_title="PharmaSUG China 2025 - Paper SA-105",
@@ -53,8 +54,6 @@ st.markdown("""
         line-height: 1.5em !important;
     }
 
-
-
     /* Code blocks - often benefit from being slightly smaller than body text for readability of code itself */
     pre, code {
         font-size: 0.8em !important; /* Slightly smaller than body text for code snippets */
@@ -68,8 +67,16 @@ st.markdown("""
     .st-emotion-cache-vk33as { /* Target sidebar text elements */
         font-size: 1.1em;
     }
-
-
+    /* Custom styling for the disclaimer expander */
+    .disclaimer-expander .st-emotion-cache-rnprt4 { /* Targeting the expander header */
+        background-color: #ffe0b2; /* Light orange background for header */
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+    .disclaimer-expander .st-emotion-cache-rnprt4 p {
+        font-weight: bold; /* Make the "Disclaimer" text bold */
+        color: #e65100; /* Darker orange for text */
+    }
 </style>
 """, unsafe_allow_html=True) # Important: This allows injecting HTML/CSS
 
@@ -87,17 +94,44 @@ This Streamlit application serves as an **interactive companion** for the presen
 Use the navigation on the left sidebar to explore the different sections of the paper and interactive demonstrations.
 """)
 st.markdown("---")
+
+# --- 添加免责声明 ---
+# 使用 st.expander 来包含免责声明，使其可以折叠
+with st.expander("⚠️ **Disclaimer / 免责声明**", expanded=False): # 默认不展开
+    st.warning("""
+    **Disclaimer:**
+
+    This Streamlit application is developed for **demonstrational and informational purposes only**, serving as a supplementary resource to the PharmaSUG China 2025 Paper SA-105.
+
+    *   The data used in the interactive demonstrations and examples are **dummy or simulated data** and do not represent actual patient data or clinical trial results.
+    *   The statistical methods and their implementations demonstrated herein are simplified for illustrative purposes and **should not be used for clinical decision-making, diagnostic purposes, or any real-world medical applications.**
+    *   The views and interpretations expressed in this application are those of the author(s) and do not necessarily reflect the official policy or position of AstraZeneca or any other affiliated organization.
+    *   The author(s) and contributors disclaim any liability for any direct or indirect damages or losses resulting from the use or misuse of the information or tools provided in this application. Users are advised to exercise their own judgment and consult with qualified professionals for any specific applications.
+
+    ---
+
+    **免责声明：**
+
+    本 Streamlit 应用程序仅用于**演示和信息目的**，作为 PharmaSUG China 2025 论文 SA-105 的补充资源。
+
+    *   交互式演示和示例中使用的数据均为**虚拟或模拟数据**，不代表实际的患者数据或临床试验结果。
+    *   此处展示的统计方法及其实现已为说明目的进行了简化，**不应用于临床决策、诊断目的或任何实际医疗应用。**
+    *   本应用程序中表达的观点和解释属于作者，不一定反映阿斯利康或任何其他附属组织的官方政策或立场。
+    *   作者和贡献者对因使用或误用本应用程序中提供的信息或工具而导致的任何直接或间接损害或损失不承担任何责任。建议用户自行判断，并在任何特定应用中咨询合格的专业人士。
+    """)
+# --- 免责声明结束 ---
+
 st.header("Abstract")
 # st.info("""
-# Accurate handling of missing data is vital in clinical trials and research. Multiple imputation, a robust statistical method, is traditionally executed using SAS software. 
-#         However, with R's growing popularity as an open-source alternative, implementing these processes in R is increasingly desirable for flexibility and accessibility. 
-#         This paper details the implementation of **multiple imputation and ANCOVA analysis using Rubin's rule** in R, replicating established SAS procedures. 
-#         Leveraging R's statistical libraries, we recreate the multiple imputation process and apply Rubin's rule to imputed datasets. 
-#         Our comparative analysis, using dummy data, validates the consistency of R's results with those from SAS, attributing differences **solely to inherent randomness** in the imputation. 
-#         Our findings confirm R's viability as an alternative to SAS, offering added flexibility without compromising accuracy. 
-#         This work not only validates R for multiple imputation but also provides a practical guide for researchers transitioning from SAS to R. 
+# Accurate handling of missing data is vital in clinical trials and research. Multiple imputation, a robust statistical method, is traditionally executed using SAS software.
+#         However, with R's growing popularity as an open-source alternative, implementing these processes in R is increasingly desirable for flexibility and accessibility.
+#         This paper details the implementation of **multiple imputation and ANCOVA analysis using Rubin's rule** in R, replicating established SAS procedures.
+#         Leveraging R's statistical libraries, we recreate the multiple imputation process and apply Rubin's rule to imputed datasets.
+#         Our comparative analysis, using dummy data, validates the consistency of R's results with those from SAS, attributing differences **solely to inherent randomness** in the imputation.
+#         Our findings confirm R's viability as an alternative to SAS, offering added flexibility without compromising accuracy.
+#         This work not only validates R for multiple imputation but also provides a practical guide for researchers transitioning from SAS to R.
 #         Key R packages used include "mice" and "norm" for imputation, and "stats" and "emmeans" for ANCOVA with Rubin's rule.
-#         The analyses were conducted using SAS version 9.04.01 and R version 4.4.1. 
+#         The analyses were conducted using SAS version 9.04.01 and R version 4.4.1.
 #         Detailed R package versions are provided in the renv.lock file in the project repository (https://github.com/GZfisher/mi_ancova_pooling).
 # """)
 # st.markdown("""
@@ -127,8 +161,6 @@ st.header("Abstract")
 # *   **Software Versions:** Analyses were conducted using **SAS version 9.04.01** and **R version 4.4.1**.
 # *   **Detailed Reproducibility:** Detailed R package versions are provided in the `renv.lock` file in our project repository: [https://github.com/GZfisher/mi_ancova_pooling](https://github.com/GZfisher/mi_ancova_pooling).
 # """)
-
-from streamlit_extras.stylable_container import stylable_container
 
 # 主要问题板块
 with stylable_container(
@@ -234,3 +266,4 @@ st.markdown("""
 
 st.markdown("---") # Add a separator below the buttons
 create_navigation_buttons(__file__, 'lower')
+
