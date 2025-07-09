@@ -4,7 +4,8 @@ import numpy as np
 from utils import create_navigation_buttons # Assuming this utility is available
 from streamlit_mermaid import st_mermaid
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide",
+                   initial_sidebar_state="collapsed")
 st.markdown("""
 <style>
 /* Global font size increase for all text */
