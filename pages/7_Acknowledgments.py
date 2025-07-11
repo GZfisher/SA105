@@ -88,14 +88,14 @@ with stylable_container(
 ):
     st.markdown("""
         #### 🎈 The author would like to sincerely thank:
-        *   **Menghao Xu**, statistician at AstraZeneca, 
+        *   **Menghao Xu**, statistician at AstraZeneca, and **Houmin Xing**, then an intern
                     
-        *   and **Houmin Xing**, then an intern, for their invaluable contributions to the initial stages of this work. 
+        *   for their invaluable contributions to the initial stages of this work. 
                     
         #### 🎊 Special thanks are also extended to:
-        *   **Kevin Huang**, programmer at AstraZeneca, 
+        *   **Kevin Huang**, programmer at AstraZeneca, and my supervisor **Yiwen Wang** 
                     
-        *   and my supervisor **Yiwen Wang** for their thoughtful review and constructive support on this manuscript. 
+        *   for their thoughtful review and constructive support on this manuscript. 
         
         #### 👾 The author also gratefully acknowledges the assistance of **AI-based writing tools** during the preparation of this article.
     """)
