@@ -89,7 +89,7 @@ with stylable_container(
 ):
     st.markdown("""
         #### 🎈 The author would like to sincerely thank:
-        *   **Menghao Xu**, statistician at AstraZeneca, and **Houmin Xing**, then an intern
+        *   **Menghao Xu**, statistician at AstraZeneca, and **Houmin Xing**, then an intern, and **Yibin Xiong**, then an FSP
                     
         *   for their invaluable contributions to the initial stages of this work. 
                     

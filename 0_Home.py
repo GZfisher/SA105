@@ -85,7 +85,7 @@ st.markdown("---") # Add a separator below the buttons
 
 st.title("PharmaSUG China 2025 - Paper SA-105")
 st.header("Implementing Multiple Imputation and ANCOVA with Rubin's Rule in R: A Comparative Study with SAS")
-st.write("**Zifan Guo, AstraZeneca**")
+st.write("**Zifan Guo, AstraZeneca** and **Menghao Xu, AstraZeneca**")
 st.write("Email: zifan.guo@astrazeneca.com or gzfchong0815@163.com")
 st.markdown("---")
 st.caption("""
