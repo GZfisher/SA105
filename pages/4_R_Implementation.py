@@ -131,6 +131,24 @@ mda_r <- function (s, theta, steps = 1, showits = FALSE) {
     cat("\\n")
   theta
 }
+
+mda.norm <- function(s,theta,steps=1,showits=FALSE ){
+  s$x <- .na.to.snglcode(s$x,999)
+  tobs <- .Fortran("tobsmn",s$p,s$psi,s$n,s$x,s$npatt,s$r,s$mdpst,s$nmdp,
+    s$last,integer(s$p),s$sj,s$layer,s$nlayer,s$d,
+    matrix(0,s$nlayer,s$d),PACKAGE="norm")[[15]]
+  if(showits) cat(paste("Steps of Monotone Data Augmentation:",
+    "\n")) 
+  for(i in 1:steps){
+    if(showits) cat(paste(format(i),"...",sep=""))
+    s$x <- .Fortran("is2n",s$d,theta,s$p,s$psi,s$n,s$x,s$npatt,
+      s$r,s$mdpst,s$nmdp,s$sj,s$last,integer(s$p),integer(s$p),
+      double(s$p),theta,PACKAGE="norm")[[6]]
+    theta <- .Fortran("ps2n",s$p,s$psi,s$n,s$x,s$npatt,s$r,s$mdpst,
+      s$nmdp,integer(s$p),integer(s$p),s$nmon,s$sj,s$nlayer,s$d,
+      tobs,numeric(s$d),numeric(s$d),numeric(s$p+1),numeric(s$d),PACKAGE="norm")[[19]]}
+  if(showits)cat("\n")
+  theta}
 """, language="r")
 
 with st.expander("**MCMC Imputation Workflow**"):
