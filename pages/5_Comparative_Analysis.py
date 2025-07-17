@@ -136,7 +136,7 @@ For our dummy data (500 subjects, 7 model parameters), the correct complete-data
 edf_setting = st.radio(
     "Select SAS EDF Setting (Conceptual)",
     ("Default (Infinite)", "Corrected (EDF=493)"),
-    index=1, # Default to corrected as it's the right way
+    index=0, # Default to corrected as it's the right way
     help="Observe how the conceptual P-value and Confidence Interval change based on the EDF setting."
 )
 

@@ -138,7 +138,7 @@ mda.norm <- function(s,theta,steps=1,showits=FALSE ){
     s$last,integer(s$p),s$sj,s$layer,s$nlayer,s$d,
     matrix(0,s$nlayer,s$d),PACKAGE="norm")[[15]]
   if(showits) cat(paste("Steps of Monotone Data Augmentation:",
-    "\n")) 
+    "\\n")) 
   for(i in 1:steps){
     if(showits) cat(paste(format(i),"...",sep=""))
     s$x <- .Fortran("is2n",s$d,theta,s$p,s$psi,s$n,s$x,s$npatt,
@@ -147,7 +147,7 @@ mda.norm <- function(s,theta,steps=1,showits=FALSE ){
     theta <- .Fortran("ps2n",s$p,s$psi,s$n,s$x,s$npatt,s$r,s$mdpst,
       s$nmdp,integer(s$p),integer(s$p),s$nmon,s$sj,s$nlayer,s$d,
       tobs,numeric(s$d),numeric(s$d),numeric(s$p+1),numeric(s$d),PACKAGE="norm")[[19]]}
-  if(showits)cat("\n")
+  if(showits)cat("\\n")
   theta}
 """, language="r")
 
@@ -258,6 +258,17 @@ While `mice::pool()` and `mitools::MIcombine()` have limitations for clinical tr
             the `emmeans` package provides robust Rubin's Rule functionality for models fitted across multiply imputed datasets. 
             We demonstrate how to obtain pooled estimates, confidence intervals, and hypothesis tests.
 """)
+import base64
+with open("fig/emmeans.png", "rb") as image_file:
+    encoded = base64.b64encode(image_file.read()).decode()
+image_html = f'''
+<a href="https://github.com/rvlenth/emmeans/issues/80" target="_blank">
+    <img src="data:image/png;base64,{encoded}" width="auto">
+</a>
+'''
+st.markdown(
+    image_html, unsafe_allow_html=True
+)
 with st.expander("**ANCOVA and Pooling**"):
     st.markdown("""
 Using `emmeans::emmeans`, it is possible to obtain pooled estimates, confidence intervals, 
