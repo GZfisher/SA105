@@ -223,7 +223,7 @@ st.markdown("""
 Point estimates and confidence intervals from R and SAS were overall quite close across all visit timepoints. While perfect replication was not possible due to differences in underlying random number generation, the observed differences were minor and primarily attributed to the inherent stochasticity in the imputation process.
 """)
 st.image("fig/ANCOVA_forest.png",
-         caption="Comparison of Estimates and CIs between SAS and R (Your presentation figure goes here)")
+         caption="Comparison of Estimates and CIs between SAS and R")
 st.error("""
            It is important to note that perfect replication between the two platforms was **not possible** due to differences in their underlying random number generation. 
            These randomization mechanisms can lead to small discrepancies in the imputed datasets, which subsequently affect the **analytic results**. 
