@@ -123,6 +123,9 @@ We first performed multiple imputation on the dummy dataset with missing values 
 """)
 st.image("fig/result compare EDF null.png",
          caption="Comparison Results when EDF is Null")
+with st.expander("**T-Distribution Comparison**"):
+    st.image("fig/t distribution.webp",
+            caption="T-Distribution Comparison")
 
 st.markdown("### Interactive: The Impact of Degrees of Freedom (DF)")
 st.markdown("""
