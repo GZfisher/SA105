@@ -102,7 +102,7 @@ prelim.norm.new <- function (x) {
 
 with st.expander("**Core MCMC function**"):
     st.markdown("""
-We are currently using the mda.norm function from the norm package, 
+We are currently using the `mda.norm` function from the norm package, 
                 but have closely examined and reviewed the logic and algorithms of 
                 its underlying Fortran implementation, particularly to address issues observed 
                 with higher-dimensional data.
@@ -122,7 +122,8 @@ mda.norm <- function(s,theta,steps=1,showits=FALSE ){
       s$nmdp,integer(s$p),integer(s$p),s$nmon,s$sj,s$nlayer,s$d,
       tobs,numeric(s$d),numeric(s$d),numeric(s$p+1),numeric(s$d),PACKAGE="norm")[[19]]}
   if(showits)cat("\\n")
-  theta}
+  theta
+}
 """, language="r")
 
 with st.expander("**MCMC Imputation Workflow**"):
