@@ -102,41 +102,15 @@ prelim.norm.new <- function (x) {
 
 with st.expander("**Core MCMC function**"):
     st.markdown("""
-We developed a core function `mda_r` that alternately performs the I-step and P-step as described above. 
-                This function is based on, and extends, the `mda.norm` function from the `norm` package, 
-                with modifications designed to address the limitations observed when handling higher-dimensional data.
+We are currently using the mda.norm function from the norm package, 
+                but have closely examined and reviewed the logic and algorithms of 
+                its underlying Fortran implementation, particularly to address issues observed 
+                with higher-dimensional data.
     """)
     st.code("""
 # complete I-step and P-step
-mda_r <- function (s, theta, steps = 1, showits = FALSE) {
-  s$x <- .na.to.snglcode(s$x, as.double(999))
-  tobs <- tobsmn(s$p, s$psi, s$n, s$x, s$npatt, s$r, s$mdpst,
-  s$nmdp, s$last, integer(s$p), s$sj, s$layer, s$nlayer, s$d)
-  if (showits)
-      cat(paste("Steps of Monotone Data Augmentation:", "\\n"))
-  for (i in 1:steps) {
-      if (showits)
-        cat(paste(format(i), "...", sep = ""))
-      # I-step: impute missing data given current parameters
-      s$x <- is2n(s$d, theta, s$p, s$psi, s$n,
-                  s$x, s$npatt, s$r, s$mdpst, s$nmdp, s$sj, s$last,
-                  integer(s$p), integer(s$p), double(s$p), theta, rnorm(n=1))
-      # P-step: update parameters given completed data
-      theta <- ps2n(s$p, s$psi, s$n, s$x, s$npatt,
-                    s$r, s$mdpst, s$nmdp, integer(s$p), integer(s$p),
-                    s$nmon, s$sj, s$nlayer, s$d, tobs, numeric(s$d),
-                    numeric(s$d), numeric(s$p + 1), numeric(s$d))
-  }
-  if (showits)
-    cat("\\n")
-  theta
-}
-
 mda.norm <- function(s,theta,steps=1,showits=FALSE ){
-  s$x <- .na.to.snglcode(s$x,999)
-  tobs <- .Fortran("tobsmn",s$p,s$psi,s$n,s$x,s$npatt,s$r,s$mdpst,s$nmdp,
-    s$last,integer(s$p),s$sj,s$layer,s$nlayer,s$d,
-    matrix(0,s$nlayer,s$d),PACKAGE="norm")[[15]]
+  ...
   if(showits) cat(paste("Steps of Monotone Data Augmentation:",
     "\\n")) 
   for(i in 1:steps){
@@ -153,7 +127,7 @@ mda.norm <- function(s,theta,steps=1,showits=FALSE ){
 
 with st.expander("**MCMC Imputation Workflow**"):
     st.markdown("""
-The `step1` function then orchestrates the MCMC imputation workflow, preparing data, getting initial parameters, running `mda_r`, and generating multiple imputed datasets while ensuring a monotone structure.
+The `step1` function then orchestrates the MCMC imputation workflow, preparing data, getting initial parameters, running `mda.norm`, and generating multiple imputed datasets while ensuring a monotone structure.
     """)
     st.code("""
 # MCMC imputation function
@@ -161,13 +135,13 @@ step1 <- function(data, nimpute, emmaxits, maxits, seed) {
   s <- prelim.norm.new(data) # Prepare data for norm package
   thetahat <- em.norm(s, maxits = emmaxits) # Get initial parameters using EM algorithm
   rngseed(seed) # Set random seed
-  theta <- mda_r(s, thetahat, steps = maxits, showits = TRUE) # Run MCMC to update parameters
 
   all_mono_new <- data.frame(data)
   all_mono_new[,"impno"] <- 0 # Add imputation indicator for original data
 
   for (i in 1:nimpute) {
-    all_mono_one_time <- data.frame(imp.norm(s, theta, data)) # Impute missing values
+    theta <- mda.norm(s, thetahat, steps = maxits, showits = TRUE)   # Run MCMC to update parameters
+    all_mono_one_time <- data.frame(imp.norm(s, theta, data))   # Impute missing values
     # Ensure monotone structure by setting post-missing values to NA for each row
     for (j in 1:nrow(data)) {
       last_num <- max(which(!is.na(data[j,])))
